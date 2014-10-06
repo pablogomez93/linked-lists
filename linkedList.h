@@ -9,7 +9,7 @@ class LinkedList {
   public:
 
 	/*
-	 * No-parameters constructor, defalast constructor.
+	 * No-parameters constructor, defaback constructor.
 	 */
 	LinkedList();
 
@@ -26,12 +26,14 @@ class LinkedList {
 	void agregarAdelante(const T&);
 	void agregarAtras(const T& nuevoAdepto);
 
-	const T& last() const;
-	const T& first() const;
+	const T& back() const;
+	const T& front() const;
 
+	void popFront();
+	void popBack();
 
 	/*
-	 * Indicates if list has 0 elements. False if it doesn't.
+	 * Indicates whether the list has 0 elements. False if it doesn't.
 	 */
 	bool isEmpty() const;
 
@@ -41,41 +43,43 @@ class LinkedList {
 	int size() const;
 
 	/*
-	 * True only if both has the same values in all of its nodes.
+	 * True only if both has the same values in all its nodes.
 	 */
-	// bool operator==(const LinkedList<T>&) const;
+	bool operator==(const LinkedList<T>&) const;
 
+	const T& operator[](int position) const;
+	
 
   private:
 	/*
 	 * Node implemetation
 	 */
 	struct Node {
-        Node(const T& newValue):value(newValue){}
-
 		T value;
 		Node* next;
+        Node(const T& newValue):value(newValue){}
+
 	};
 
 	int _length;
-  	Node* _first;
-  	Node* _last;
+  	Node* _front;
+  	Node* _back;
 
 };
 
 template<class T>
 LinkedList<T>::LinkedList(){
 	_length = 0;
-	_first = NULL;
-	_last = NULL;
+	_front = NULL;
+	_back = NULL;
 }
 
 template<class T>
 LinkedList<T>::LinkedList(const LinkedList<T>& other){
 	_length = other._length;
-	_first = NULL;
+	_front = NULL;
 
-	Node* otherActual = other._first;
+	Node* otherActual = other._front;
 	Node* buffer = NULL;
 
 	while(otherActual != NULL){
@@ -83,13 +87,14 @@ LinkedList<T>::LinkedList(const LinkedList<T>& other){
 
 		if(buffer != NULL)
 			buffer->next = newNode;
+		else
+			_front = newNode;
 
 		buffer = newNode;
-
 		otherActual = otherActual->next;
 	}
 
-	_last = buffer;
+	_back = buffer;
 }
 
 // template<class T>
@@ -100,13 +105,13 @@ LinkedList<T>::LinkedList(const LinkedList<T>& other){
 // }
 
 template<class T>
-const T& LinkedList<T>::first() const{
-	return _first->value;
+const T& LinkedList<T>::front() const{
+	return _front->value;
 }
 
 template<class T>
-const T& LinkedList<T>::last() const{
-	return _last->value;
+const T& LinkedList<T>::back() const{
+	return _back->value;
 }
 
 template<class T>
@@ -114,27 +119,58 @@ void LinkedList<T>::agregarAdelante(const T& newElement){
 	Node* newNode = new Node(newElement);
 
 	if(!_length)
-		_last = newNode;
+		_back = newNode;
 	else
-		newNode->next = _first;
+		newNode->next = _front;
 
-	_first = newNode;
-
+	_front = newNode;
 	_length++;
 }
 
 template<class T>
 void LinkedList<T>::agregarAtras(const T& newElement){
 	Node* newNode = new Node(newElement);
+	newNode->next = NULL;
 	
 	if(!_length)
-		_first = newNode;
+		_front = newNode;
 	else
-		_last->next = newNode;
+		_back->next = newNode;
 		
-	_last = newNode;
-
+	_back = newNode;
 	_length++;
+}
+
+template<class T>
+void LinkedList<T>::popFront(){
+	Node* exFront = _front;
+	_front = _front->next;
+	if(_length == 1)
+		_back = NULL;
+
+	delete exFront;
+	_length--;
+}
+
+template<class T>
+void LinkedList<T>::popBack(){
+	Node* currentNode = _front;
+	Node* exBack = _back;
+
+	if(_length == 1){
+		_front = NULL;
+		_back = NULL;
+	}else{
+		while(currentNode->next != _back){
+			currentNode = currentNode->next;
+		}
+
+		_back = currentNode;
+		_back->next = NULL;
+	}
+
+	delete exBack;
+	_length--;
 }
 
 
@@ -148,28 +184,33 @@ int LinkedList<T>::size() const{
 	return _length;
 }
 
-// template<class T>
-// bool LinkedList<T>::operator==(const LinkedList<T>& otra) const{
-//     bool ret = (_length == otra.size()) && (hayElegido() == otra.hayElegido());
-//     if(ret && hayElegido()){
-//     	ret = _elegido->value == otra.dameElegido();
-//     }
-//     if(ret && _length != 0){
-//     	ret = _alabando->value == otra.adeptoAlabando();
-//     }
-//     Node* n = _first;
-//     Node* m = otra._first;
-//     if(ret && _length!=0){
-//     	int i = 0;
-//     	for(i=0; i<_length && ret;i++){
-//     		ret = (n->value == m->value);
-//     		n = n->next;
-//             m = m->next;
-//     	}
-//     }
-//     return ret;
-// }
+template<class T>
+bool LinkedList<T>::operator==(const LinkedList<T>& other) const{
+	if(_length != other._length)
+		return false;
 
+	Node* otherCurrent = other._front;
+	Node* thisCurrent = _front;
 
+	while(otherCurrent != NULL){
+		if(otherCurrent->value != thisCurrent->value)
+			return false;
+
+		otherCurrent = otherCurrent->next;
+		thisCurrent = thisCurrent->next;
+	}
+
+	return true;
+}
+
+template<class T>
+const T& LinkedList<T>::operator[](int position) const{
+	Node* currentNode = _front;
+	for (int i = 0; i < position; i++){
+		currentNode = currentNode->next;
+	}
+
+	return currentNode->value;
+}
 
 #endif //LINKEDLIST_H_

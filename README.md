@@ -1,4 +1,4 @@
 linked-list
 ===========
 
-A small implementation of a linked list, in C++
+A small implementation of a linked list, template in C++
