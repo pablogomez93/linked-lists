@@ -21,7 +21,7 @@ class LinkedList {
 	/*
 	 * Destructor
 	 */
-	// ~LinkedList();
+	~LinkedList();
 
 	void agregarAdelante(const T&);
 	void agregarAtras(const T& nuevoAdepto);
@@ -97,12 +97,12 @@ LinkedList<T>::LinkedList(const LinkedList<T>& other){
 	_back = buffer;
 }
 
-// template<class T>
-// LinkedList<T>::~LinkedList(){
-// 	while(_length > 0){
-// 	 	golDeCristiano(adeptoAlabando());
-// 	}
-// }
+template<class T>
+LinkedList<T>::~LinkedList(){
+	while(_length){
+	 	popBack();
+	}
+}
 
 template<class T>
 const T& LinkedList<T>::front() const{
