@@ -32,6 +32,8 @@ class LinkedList {
 	void popFront();
 	void popBack();
 
+	void clear();
+
 	/*
 	 * Indicates whether the list has 0 elements. False if it doesn't.
 	 */
@@ -99,9 +101,13 @@ LinkedList<T>::LinkedList(const LinkedList<T>& other){
 
 template<class T>
 LinkedList<T>::~LinkedList(){
-	while(_length){
+	clear();
+}
+
+template<T>
+void LinkedList<T>::clear(){
+	while(_length)
 	 	popBack();
-	}
 }
 
 template<class T>
