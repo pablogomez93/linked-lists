@@ -49,7 +49,7 @@ class LinkedList {
 	 */
 	bool operator==(const LinkedList<T>&) const;
 
-	const T& operator[](int position) const;
+	T& operator[](int position) const;
 	
 
   private:
@@ -59,8 +59,8 @@ class LinkedList {
 	struct Node {
 		T value;
 		Node* next;
-        Node(const T& newValue):value(newValue){}
 
+        Node(const T& newValue):value(newValue){}
 	};
 
 	int _length;
@@ -104,7 +104,7 @@ LinkedList<T>::~LinkedList(){
 	clear();
 }
 
-template<T>
+template<class T>
 void LinkedList<T>::clear(){
 	while(_length)
 	 	popBack();
@@ -167,9 +167,8 @@ void LinkedList<T>::popBack(){
 		_front = NULL;
 		_back = NULL;
 	}else{
-		while(currentNode->next != _back){
+		while(currentNode->next != _back)
 			currentNode = currentNode->next;
-		}
 
 		_back = currentNode;
 		_back->next = NULL;
@@ -210,11 +209,10 @@ bool LinkedList<T>::operator==(const LinkedList<T>& other) const{
 }
 
 template<class T>
-const T& LinkedList<T>::operator[](int position) const{
+T& LinkedList<T>::operator[](int position) const{
 	Node* currentNode = _front;
-	for (int i = 0; i < position; i++){
+	for (int i = 0; i < position; i++)
 		currentNode = currentNode->next;
-	}
 
 	return currentNode->value;
 }
