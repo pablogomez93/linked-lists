@@ -19,6 +19,11 @@ class LinkedList {
 	LinkedList(const LinkedList<T>&);
 
 	/*
+	 * Sixed constructor
+	 */
+	LinkedList(int,const T&);
+
+	/*
 	 * Destructor
 	 */
 	~LinkedList();
@@ -43,6 +48,12 @@ class LinkedList {
 	 * Returns quantity of elements in the list
 	 */
 	int size() const;
+
+	void merge(const LinkedList<T>&);
+
+	void removeTail();
+
+	void removeBegin();
 
 	/*
 	 * True only if both has the same values in all its nodes.
@@ -100,6 +111,16 @@ LinkedList<T>::LinkedList(const LinkedList<T>& other){
 }
 
 template<class T>
+LinkedList<T>::LinkedList(int size,const T& defaultValue){
+	_length = 0;
+	_front = NULL;
+	_back = NULL;
+
+	while(size)
+		agregarAtras(defaultValue);
+}
+
+template<class T>
 LinkedList<T>::~LinkedList(){
 	clear();
 }
@@ -134,6 +155,18 @@ void LinkedList<T>::agregarAdelante(const T& newElement){
 }
 
 template<class T>
+void LinkedList<T>::removeBegin(){
+	while(_length - 1)
+	 	popFront();
+}
+
+template<class T>
+void LinkedList<T>::removeTail(){
+	while(_length - 1)
+	 	popBack();
+}
+
+template<class T>
 void LinkedList<T>::agregarAtras(const T& newElement){
 	Node* newNode = new Node(newElement);
 	newNode->next = NULL;
@@ -145,6 +178,20 @@ void LinkedList<T>::agregarAtras(const T& newElement){
 		
 	_back = newNode;
 	_length++;
+}
+
+template<class T>
+void LinkedList<T>::merge(const LinkedList<T>& otherList){
+	if(otherList._length > 0){
+		_back->next = otherList._front;
+		_back = otherList._back;
+	}
+
+	_length += otherList._length;
+
+	otherList._front = _front;
+	otherList._back = _back;
+	otherList._length = _length;
 }
 
 template<class T>
