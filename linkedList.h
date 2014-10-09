@@ -182,16 +182,8 @@ void LinkedList<T>::agregarAtras(const T& newElement){
 
 template<class T>
 void LinkedList<T>::merge(const LinkedList<T>& otherList){
-	if(otherList._length > 0){
-		_back->next = otherList._front;
-		_back = otherList._back;
-	}
-
-	_length += otherList._length;
-
-	otherList._front = _front;
-	otherList._back = _back;
-	otherList._length = _length;
+	for (int i = 0; i < otherList._length; i++)	//When iterator implemented, refactor this
+		agregarAtras(otherList[i]);
 }
 
 template<class T>
