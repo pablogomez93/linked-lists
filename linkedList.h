@@ -9,7 +9,7 @@ class LinkedList {
   public:
 
 	/*
-	 * No-parameters constructor, defaback constructor.
+	 * No-parameters constructor, default constructor.
 	 */
 	LinkedList();
 
@@ -19,7 +19,7 @@ class LinkedList {
 	LinkedList(const LinkedList<T>&);
 
 	/*
-	 * Sixed constructor
+	 * Sized constructor
 	 */
 	LinkedList(int,const T&);
 
@@ -28,8 +28,8 @@ class LinkedList {
 	 */
 	~LinkedList();
 
-	void agregarAdelante(const T&);
-	void agregarAtras(const T& nuevoAdepto);
+	void pushFront(const T&);
+	void pushBack(const T&);
 
 	const T& back() const;
 	const T& front() const;
@@ -117,7 +117,7 @@ LinkedList<T>::LinkedList(int size,const T& defaultValue){
 	_back = NULL;
 
 	while(size)
-		agregarAtras(defaultValue);
+		pushBack(defaultValue);
 }
 
 template<class T>
@@ -142,7 +142,7 @@ const T& LinkedList<T>::back() const{
 }
 
 template<class T>
-void LinkedList<T>::agregarAdelante(const T& newElement){
+void LinkedList<T>::pushFront(const T& newElement){
 	Node* newNode = new Node(newElement);
 
 	if(!_length)
@@ -167,7 +167,7 @@ void LinkedList<T>::removeTail(){
 }
 
 template<class T>
-void LinkedList<T>::agregarAtras(const T& newElement){
+void LinkedList<T>::pushBack(const T& newElement){
 	Node* newNode = new Node(newElement);
 	newNode->next = NULL;
 	
@@ -183,7 +183,7 @@ void LinkedList<T>::agregarAtras(const T& newElement){
 template<class T>
 void LinkedList<T>::merge(const LinkedList<T>& otherList){
 	for (int i = 0; i < otherList._length; i++)	//When iterator implemented, refactor this
-		agregarAtras(otherList[i]);
+		pushBack(otherList[i]);
 }
 
 template<class T>
