@@ -55,6 +55,8 @@ class LinkedList {
 
 	void removeBegin();
 
+	void erase(int i);
+
 	/*
 	 * True only if both has the same values in all its nodes.
 	 */
@@ -184,6 +186,34 @@ template<class T>
 void LinkedList<T>::merge(const LinkedList<T>& otherList){
 	for (int i = 0; i < otherList._length; i++)	//When iterator implemented, refactor this
 		pushBack(otherList[i]);
+}
+
+template<class T>
+void LinkedList<T>::erase(int i){
+	Node* toDeleteNode = _front;
+	
+	if(_length == 1 && i == 0){		//Second member of this check is only for security
+		_front = NULL;
+		_back = NULL;
+	}else{
+		if(i == 0)
+			_front = _front->next;
+		else{
+			Node* iter = _front;
+			for(i; i>1 ; i--)
+				iter = iter->next;
+
+			toDeleteNode = iter->next;
+
+			if(toDeleteNode == _back)
+				_back = iter;
+
+			iter->next = iter->next->next;
+		}
+	}
+
+	_length--;
+	delete toDeleteNode;
 }
 
 template<class T>

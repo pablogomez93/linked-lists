@@ -118,5 +118,39 @@ int main(){
 	for (i = 99; i >= 0; i--)
 		assert(lastTestList[i] == 100 - i);
 
+
+	//Delete a specific node test.
+	testList.clear();
+	assert(testList.size() == 0);
+	for (i = 9; i >= 0; i--)
+		testList.pushBack(i*5);
+
+	assert(testList.size() == 10);
+	assert(testList.front() == 45);
+	assert(testList.back() == 0);
+
+	testList.erase(4);
+
+	assert(testList.size() == 9);
+	assert(testList.front() == 45);
+	assert(testList.back() == 0);
+
+	testList.erase(0);
+
+	assert(testList.size() == 8);
+	assert(testList.front() == 40); //8 * 5
+	assert(testList.back() == 0);
+
+	testList.erase(7);
+
+	assert(testList.size() == 7);
+	assert(testList.front() == 8 * 5);
+	assert(testList.back() == 5);
+
+	for (int i = 0; i < 7; i++)
+		testList.erase(0);
+
+	assert(testList.size() == 0);
+
 	return 0;
 }
