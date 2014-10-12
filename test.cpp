@@ -152,5 +152,20 @@ int main(){
 
 	assert(testList.size() == 0);
 
+	testList.clear();
+
+	for (int i = 9; i >= 0; i--)
+		testList.pushBack(i);
+
+	assert(testList[0] == 9 && testList.front() == 9);
+	for(int i = 9; i > 0; i--)
+		assert(testList[i] == 9 - i);
+
+	testList[0] = 40;
+
+	assert(testList[0] == 40 && testList.front() == 40);
+	for(int i = 9; i > 0; i--)
+		assert(testList[i] == 9 - i);
+
 	return 0;
 }

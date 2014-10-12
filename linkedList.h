@@ -19,25 +19,32 @@ class LinkedList {
 	LinkedList(const LinkedList<T>&);
 
 	/*
-	 * Sized constructor
+	 * Sized constructor. Generates a list of size = n with all values seted in defaultValues parameter value.	
 	 */
-	LinkedList(int,const T&);
+	LinkedList(int n,const T& defaultValues);
 
 	/*
 	 * Destructor
 	 */
 	~LinkedList();
 
+	/*
+	 * Add a element at the front or at the end of the list, respectively. Size increased by one.
+	 */
 	void pushFront(const T&);
 	void pushBack(const T&);
 
-	const T& back() const;
+	/*
+	 * Return a reference of first and last element of the list, respectively, not modifiable. 
+	 */
 	const T& front() const;
+	const T& back() const;
 
+	/*
+	 * Remove first and last element of the list, respectively. Size decreases by 1.
+	 */
 	void popFront();
 	void popBack();
-
-	void clear();
 
 	/*
 	 * Indicates whether the list has 0 elements. False if it doesn't.
@@ -45,16 +52,35 @@ class LinkedList {
 	bool isEmpty() const;
 
 	/*
-	 * Returns quantity of elements in the list
+	 * Returns the number of items in the list.
 	 */
 	int size() const;
 
+	/*
+	 * Take a linkedList (parameter) and copy all its values, in orden, at the end of this list.
+	 */
 	void merge(const LinkedList<T>&);
 
-	void removeTail();
-
+	/*
+	 * Remove all elements in the list, except last (this accion makes the last and first elements are the same node).
+	 * Size changes to 1.
+	 */
 	void removeBegin();
 
+	/*
+	 * Remove all elements in the list, except first (this accion makes the last and first elements are the same node).
+	 * Size changes to 1.
+	 */
+	void removeTail();
+
+	/*
+	 * Remove all elements in the list, but not delete the instance of it.
+	 */
+	void clear();
+
+	/*
+	 * Remove an specific element in the list who are in position i.
+	 */
 	void erase(int i);
 
 	/*
@@ -62,13 +88,16 @@ class LinkedList {
 	 */
 	bool operator==(const LinkedList<T>&) const;
 
+	/*
+	 * Return the value of the position passed by parameter.
+	 * This methods allows you to modify the value in requested position because returns a reference of it not const. 
+	 */
 	T& operator[](int position) const;
 	
 
   private:
-	/*
-	 * Node implemetation
-	 */
+	
+	//Node implemetation
 	struct Node {
 		T value;
 		Node* next;
@@ -128,22 +157,6 @@ LinkedList<T>::~LinkedList(){
 }
 
 template<class T>
-void LinkedList<T>::clear(){
-	while(_length)
-	 	popBack();
-}
-
-template<class T>
-const T& LinkedList<T>::front() const{
-	return _front->value;
-}
-
-template<class T>
-const T& LinkedList<T>::back() const{
-	return _back->value;
-}
-
-template<class T>
 void LinkedList<T>::pushFront(const T& newElement){
 	Node* newNode = new Node(newElement);
 
@@ -154,18 +167,6 @@ void LinkedList<T>::pushFront(const T& newElement){
 
 	_front = newNode;
 	_length++;
-}
-
-template<class T>
-void LinkedList<T>::removeBegin(){
-	while(_length - 1)
-	 	popFront();
-}
-
-template<class T>
-void LinkedList<T>::removeTail(){
-	while(_length - 1)
-	 	popBack();
 }
 
 template<class T>
@@ -183,37 +184,13 @@ void LinkedList<T>::pushBack(const T& newElement){
 }
 
 template<class T>
-void LinkedList<T>::merge(const LinkedList<T>& otherList){
-	for (int i = 0; i < otherList._length; i++)	//When iterator implemented, refactor this
-		pushBack(otherList[i]);
+const T& LinkedList<T>::front() const{
+	return _front->value;
 }
 
 template<class T>
-void LinkedList<T>::erase(int i){
-	Node* toDeleteNode = _front;
-	
-	if(_length == 1 && i == 0){		//Second member of this check is only for security
-		_front = NULL;
-		_back = NULL;
-	}else{
-		if(i == 0)
-			_front = _front->next;
-		else{
-			Node* iter = _front;
-			for(i; i>1 ; i--)
-				iter = iter->next;
-
-			toDeleteNode = iter->next;
-
-			if(toDeleteNode == _back)
-				_back = iter;
-
-			iter->next = iter->next->next;
-		}
-	}
-
-	_length--;
-	delete toDeleteNode;
+const T& LinkedList<T>::back() const{
+	return _back->value;
 }
 
 template<class T>
@@ -247,7 +224,6 @@ void LinkedList<T>::popBack(){
 	_length--;
 }
 
-
 template<class T>
 bool LinkedList<T>::isEmpty() const{
 	return !_length;
@@ -256,6 +232,58 @@ bool LinkedList<T>::isEmpty() const{
 template<class T>
 int LinkedList<T>::size() const{
 	return _length;
+}
+
+template<class T>
+void LinkedList<T>::merge(const LinkedList<T>& otherList){
+	for (int i = 0; i < otherList._length; i++)	//When iterator implemented, refactor this
+		pushBack(otherList[i]);
+}
+
+template<class T>
+void LinkedList<T>::removeBegin(){
+	while(_length - 1)
+	 	popFront();
+}
+
+template<class T>
+void LinkedList<T>::removeTail(){
+	while(_length - 1)
+	 	popBack();
+}
+
+template<class T>
+void LinkedList<T>::clear(){
+	while(_length)
+	 	popBack();
+}
+
+template<class T>
+void LinkedList<T>::erase(int i){
+	Node* toDeleteNode = _front;
+	
+	if(_length == 1 && i == 0){		//Second member of this check is only for security
+		_front = NULL;
+		_back = NULL;
+	}else{
+		if(i == 0)
+			_front = _front->next;
+		else{
+			Node* iter = _front;
+			for(i; i>1 ; i--)
+				iter = iter->next;
+
+			toDeleteNode = iter->next;
+
+			if(toDeleteNode == _back)
+				_back = iter;
+
+			iter->next = iter->next->next;
+		}
+	}
+
+	_length--;
+	delete toDeleteNode;
 }
 
 template<class T>
