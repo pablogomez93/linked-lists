@@ -123,11 +123,11 @@ LinkedList<T>::LinkedList(const LinkedList<T>& other){
 	_length = other._length;
 	_front = NULL;
 
-	Node* otherActual = other._front;
+	Node* otherCurrent = other._front;
 	Node* buffer = NULL;
 
-	while(otherActual != NULL){
-		Node* newNode = new Node(otherActual->value);
+	while(otherCurrent != NULL){
+		Node* newNode = new Node(otherCurrent->value);
 
 		if(buffer != NULL)
 			buffer->next = newNode;
@@ -135,7 +135,7 @@ LinkedList<T>::LinkedList(const LinkedList<T>& other){
 			_front = newNode;
 
 		buffer = newNode;
-		otherActual = otherActual->next;
+		otherCurrent = otherCurrent->next;
 	}
 
 	_back = buffer;
