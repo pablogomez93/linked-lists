@@ -1,32 +1,32 @@
-#ifndef LINKEDLIST_H_
-#define LINKEDLIST_H_
+#ifndef SINGLYLINKEDLIST_H_
+#define SINGLYLINKEDLIST_H_
 
 using namespace std;
 
 template<typename T>
-class LinkedList {
+class SinglyLinkedList {
 
   public:
 
 	/*
 	 * No-parameters constructor, default constructor.
 	 */
-	LinkedList();
+	SinglyLinkedList();
 
 	/*
 	 * Copy constructor
 	 */
-	LinkedList(const LinkedList<T>&);
+	SinglyLinkedList(const SinglyLinkedList<T>&);
 
 	/*
 	 * Sized constructor. Generates a list of size = n with all values seted in defaultValues parameter value.	
 	 */
-	LinkedList(int n,const T& defaultValues);
+	SinglyLinkedList(int n,const T& defaultValues);
 
 	/*
 	 * Destructor
 	 */
-	~LinkedList();
+	~SinglyLinkedList();
 
 	/*
 	 * Add a element at the front or at the end of the list, respectively. Size increased by one.
@@ -57,9 +57,9 @@ class LinkedList {
 	int size() const;
 
 	/*
-	 * Take a linkedList (parameter) and copy all its values, in orden, at the end of this list.
+	 * Take a SinglylinkedList (parameter) and copy all its values, in orden, at the end of this list.
 	 */
-	void merge(const LinkedList<T>&);
+	void merge(const SinglyLinkedList<T>&);
 
 	/*
 	 * Remove all elements in the list, except last (this accion makes the last and first elements are the same node).
@@ -86,7 +86,7 @@ class LinkedList {
 	/*
 	 * True only if both has the same values in all its nodes.
 	 */
-	bool operator==(const LinkedList<T>&) const;
+	bool operator==(const SinglyLinkedList<T>&) const;
 
 	/*
 	 * Return the value of the position passed by parameter.
@@ -112,14 +112,14 @@ class LinkedList {
 };
 
 template<class T>
-LinkedList<T>::LinkedList(){
+SinglyLinkedList<T>::SinglyLinkedList(){
 	_length = 0;
 	_front = NULL;
 	_back = NULL;
 }
 
 template<class T>
-LinkedList<T>::LinkedList(const LinkedList<T>& other){
+SinglyLinkedList<T>::SinglyLinkedList(const SinglyLinkedList<T>& other){
 	_length = other._length;
 	_front = NULL;
 
@@ -142,7 +142,7 @@ LinkedList<T>::LinkedList(const LinkedList<T>& other){
 }
 
 template<class T>
-LinkedList<T>::LinkedList(int size,const T& defaultValue){
+SinglyLinkedList<T>::SinglyLinkedList(int size,const T& defaultValue){
 	_length = 0;
 	_front = NULL;
 	_back = NULL;
@@ -154,12 +154,12 @@ LinkedList<T>::LinkedList(int size,const T& defaultValue){
 }
 
 template<class T>
-LinkedList<T>::~LinkedList(){
+SinglyLinkedList<T>::~SinglyLinkedList(){
 	clear();
 }
 
 template<class T>
-void LinkedList<T>::pushFront(const T& newElement){
+void SinglyLinkedList<T>::pushFront(const T& newElement){
 	Node* newNode = new Node(newElement);
 
 	if(!_length)
@@ -172,7 +172,7 @@ void LinkedList<T>::pushFront(const T& newElement){
 }
 
 template<class T>
-void LinkedList<T>::pushBack(const T& newElement){
+void SinglyLinkedList<T>::pushBack(const T& newElement){
 	Node* newNode = new Node(newElement);
 	newNode->next = NULL;
 	
@@ -186,17 +186,17 @@ void LinkedList<T>::pushBack(const T& newElement){
 }
 
 template<class T>
-const T& LinkedList<T>::front() const{
+const T& SinglyLinkedList<T>::front() const{
 	return _front->value;
 }
 
 template<class T>
-const T& LinkedList<T>::back() const{
+const T& SinglyLinkedList<T>::back() const{
 	return _back->value;
 }
 
 template<class T>
-void LinkedList<T>::popFront(){
+void SinglyLinkedList<T>::popFront(){
 	Node* exFront = _front;
 	_front = _front->next;
 
@@ -208,7 +208,7 @@ void LinkedList<T>::popFront(){
 }
 
 template<class T>
-void LinkedList<T>::popBack(){
+void SinglyLinkedList<T>::popBack(){
 	Node* currentNode = _front;
 	Node* exBack = _back;
 
@@ -228,41 +228,41 @@ void LinkedList<T>::popBack(){
 }
 
 template<class T>
-bool LinkedList<T>::isEmpty() const{
+bool SinglyLinkedList<T>::isEmpty() const{
 	return !_length;
 }
 
 template<class T>
-int LinkedList<T>::size() const{
+int SinglyLinkedList<T>::size() const{
 	return _length;
 }
 
 template<class T>
-void LinkedList<T>::merge(const LinkedList<T>& otherList){
+void SinglyLinkedList<T>::merge(const SinglyLinkedList<T>& otherList){
 	for (int i = 0; i < otherList._length; i++)	//When iterator is implemented, refactor this
 		pushBack(otherList[i]);
 }
 
 template<class T>
-void LinkedList<T>::removeBegin(){
+void SinglyLinkedList<T>::removeBegin(){
 	while(_length - 1)
 	 	popFront();
 }
 
 template<class T>
-void LinkedList<T>::removeTail(){
+void SinglyLinkedList<T>::removeTail(){
 	while(_length - 1)
 	 	popBack();
 }
 
 template<class T>
-void LinkedList<T>::clear(){
+void SinglyLinkedList<T>::clear(){
 	while(_length)
 	 	popBack();
 }
 
 template<class T>
-void LinkedList<T>::erase(int i){
+void SinglyLinkedList<T>::erase(int i){
 	Node* toDeleteNode = _front;
 	
 	if(_length == 1 && i == 0){
@@ -290,7 +290,7 @@ void LinkedList<T>::erase(int i){
 }
 
 template<class T>
-bool LinkedList<T>::operator==(const LinkedList<T>& other) const{
+bool SinglyLinkedList<T>::operator==(const SinglyLinkedList<T>& other) const{
 	if(_length != other._length)
 		return false;
 
@@ -309,7 +309,7 @@ bool LinkedList<T>::operator==(const LinkedList<T>& other) const{
 }
 
 template<class T>
-T& LinkedList<T>::operator[](int position) const{
+T& SinglyLinkedList<T>::operator[](int position) const{
 	Node* currentNode = _front;
 	for (int i = 0; i < position; i++)
 		currentNode = currentNode->next;
@@ -317,4 +317,4 @@ T& LinkedList<T>::operator[](int position) const{
 	return currentNode->value;
 }
 
-#endif //LINKEDLIST_H_
+#endif //SINGLYLINKEDLIST_H_

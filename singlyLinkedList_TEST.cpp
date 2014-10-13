@@ -1,12 +1,12 @@
 #include <iostream>
 #include <assert.h>
-#include "linkedList.h"
+#include "singlyLinkedList.h"
 
 using namespace std;
 
 int main(){
 
-	LinkedList<int> testList;
+	SinglyLinkedList<int> testList;
 
 	assert(testList.size() == 0);
 	testList.clear();
@@ -52,7 +52,7 @@ int main(){
 	for (i; i < 100; i++)
 		testList.pushFront(i+1);
 
-	LinkedList<int> anotherIncredibleList; //(*shudder*)
+	SinglyLinkedList<int> anotherIncredibleList; //(*shudder*)
 	for (i; i < 200; i++)
 		anotherIncredibleList.pushFront(i+1-100);
 	
@@ -74,7 +74,7 @@ int main(){
 
 
 	//Testing = operator
-	LinkedList<int> theMasterOfLists = anotherIncredibleList;
+	SinglyLinkedList<int> theMasterOfLists = anotherIncredibleList;
 	assert(!theMasterOfLists.isEmpty());
 	assert(theMasterOfLists.size() == 200);
 	for (i = 0; i < 200; i++)
@@ -92,7 +92,7 @@ int main(){
 
 
 	//Copy construtor testing
-	LinkedList<int> lastTestList(testList);
+	SinglyLinkedList<int> lastTestList(testList);
 	assert(lastTestList.size() == testList.size());
 
 	for (i = 99; i >= 0; i--)
