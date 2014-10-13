@@ -147,8 +147,10 @@ LinkedList<T>::LinkedList(int size,const T& defaultValue){
 	_front = NULL;
 	_back = NULL;
 
-	while(size)
+	while(size){
 		pushBack(defaultValue);
+		size--;
+	}
 }
 
 template<class T>
@@ -197,6 +199,7 @@ template<class T>
 void LinkedList<T>::popFront(){
 	Node* exFront = _front;
 	_front = _front->next;
+
 	if(_length == 1)
 		_back = NULL;
 
@@ -236,7 +239,7 @@ int LinkedList<T>::size() const{
 
 template<class T>
 void LinkedList<T>::merge(const LinkedList<T>& otherList){
-	for (int i = 0; i < otherList._length; i++)	//When iterator implemented, refactor this
+	for (int i = 0; i < otherList._length; i++)	//When iterator is implemented, refactor this
 		pushBack(otherList[i]);
 }
 
@@ -262,7 +265,7 @@ template<class T>
 void LinkedList<T>::erase(int i){
 	Node* toDeleteNode = _front;
 	
-	if(_length == 1 && i == 0){		//Second member of this check is only for security
+	if(_length == 1 && i == 0){
 		_front = NULL;
 		_back = NULL;
 	}else{
